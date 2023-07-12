@@ -16,7 +16,7 @@ class BorrowRoomController extends Controller
     {
         $datas = BorrowRoom::with(['user', 'room'])->get();
 
-        return view('admin.borrow-room.index', [
+        return view('admin.peminjaman', [
             'datas' => $datas,
         ]);
     }

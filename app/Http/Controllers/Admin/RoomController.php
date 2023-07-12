@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Room;
+use App\Models\RoomType;
 use Illuminate\Http\Request;
 
 class RoomController extends Controller
@@ -13,7 +14,10 @@ class RoomController extends Controller
      */
     public function index()
     {
-        return view('admin.room.index');
+        $room = Room::all();
+        return view('admin.room', [
+            'room' => $room,
+        ]);
     }
 
     /**
@@ -21,7 +25,11 @@ class RoomController extends Controller
      */
     public function create()
     {
-        return view('admin.room.create');
+        $room_types = RoomType::all();
+
+        return view('admin.tambah_room', [
+            'room_types' => $room_types,
+        ]);
     }
 
     /**
@@ -29,15 +37,13 @@ class RoomController extends Controller
      */
     public function store(Request $request)
     {
-        $validation = $request->validate([
-            'name' => 'required|string|max:255',
-            'max_people' => 'required|integer',
-            'status' => 'required',
-        ]);
+        // request all
+        $validation = $request->all();
 
-        $room = Room::create($validation);
+        // create
+        Room::create($validation);
 
-        return redirect()->route('admin.room.index')->with('success', 'Room has been created!');
+        return redirect()->route('admin.ruangan')->with('success', 'Room has been created!');
     }
 
     /**
@@ -57,7 +63,13 @@ class RoomController extends Controller
      */
     public function edit(string $id)
     {
-        return view('admin.room.edit');
+        $data = Room::findOrFail($id);
+        $room_types = RoomType::all();
+
+        return view('admin.edit_room', [
+            'data' => $data,
+            'room_types' => $room_types,
+        ]);
     }
 
     /**
@@ -69,7 +81,7 @@ class RoomController extends Controller
 
         $room->update($request->all());
 
-        return redirect()->route('admin.room.index')->with('success', 'Room has been updated!');
+        return redirect()->route('admin.ruangan')->with('success', 'Room has been updated!');
     }
 
     /**
@@ -78,9 +90,8 @@ class RoomController extends Controller
     public function destroy(string $id)
     {
         $room = Room::findOrFail($id);
-
         $room->delete();
 
-        return redirect()->route('admin.room.index')->with('success', 'Room has been deleted!');
+        return redirect()->route('admin.ruangan')->with('success', 'Room has been deleted!');
     }
 }

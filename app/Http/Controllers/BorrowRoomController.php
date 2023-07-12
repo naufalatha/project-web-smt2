@@ -12,7 +12,7 @@ class BorrowRoomController extends Controller
      */
     public function index()
     {
-        return view('borrow-room.index');
+        return view('admin.peminjaman');
     }
 
     /**
