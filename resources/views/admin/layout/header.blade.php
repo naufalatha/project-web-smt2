@@ -35,11 +35,14 @@
 
                 </ul>
 
-                <ul class="nav navbar-nav navbar-right">
+                <form action="{{ route('logout') }}" method="post">
+                    @csrf
+                    <ul class="nav navbar-nav navbar-right">
 
-                    <li><a href="#">Log Out</a></li>
+                        <li><button type="submit">Log Out</button></li>
 
-                </ul>
+                    </ul>
+                </form>
             </div><!-- /.navbar-collapse -->
         </div><!-- /.container-fluid -->
     </nav>

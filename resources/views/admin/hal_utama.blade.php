@@ -32,7 +32,7 @@
 
         <h2 style=" width: 100%; border-bottom: 4px solid gray"><b>Daftar Peminjaman</b></h2>
         <br>
-        <a href="{{ route('admin.peminjaman') }}" class="btn btn-default">Reload</a>
+        <a href="{{ route('admin.home') }}" class="btn btn-default">Reload</a>
         <br>
         <table class="table table-striped">
             <thead>
