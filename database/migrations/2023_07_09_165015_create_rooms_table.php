@@ -17,7 +17,7 @@ return new class extends Migration
             $table->integer('max_people')->nullable();
             $table->text('description')->nullable();
             $table->tinyInteger('status')->default(0);
-            $table->foreignId('room_type_id')->constrained();
+            $table->foreignId('room_type_id')->constrained()->onDelete('cascade');
             $table->timestamps();
             $table->softDeletes();
         });

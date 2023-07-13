@@ -21,7 +21,11 @@
                         <td>{{ $r->name }}</td>
                         <td>{{ $r->max_people }}</td>
                         <td>{{ $r->description }}</td>
-                        <td>{{ $r->status }}</td>
+                        @if ($r->status == 0)
+                            <td><span class="badge" style="background-color: red">Tidak Tersedia</span></td>
+                        @elseif ($r->status == 1)
+                            <td><span class="badge" style="background-color: green">Tersedia</span></td>
+                        @endif
                         <td>{{ $r->roomType->name }}</td>
                         <td><a href="{{ route('admin.ruangan.edit', ['id' => $r->id]) }}" class="btn btn-warning">Edit</a>
                             <form action="{{ route('admin.ruangan.delete', ['id' => $r->id]) }}" method="post">

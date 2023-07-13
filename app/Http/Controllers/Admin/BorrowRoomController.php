@@ -94,4 +94,17 @@ class BorrowRoomController extends Controller
 
         return redirect()->route('admin.borrow-room.index')->with('success', 'Data berhasil dihapus!');
     }
+
+    public function approvalRoom(string $id, int $approval)
+    {
+        // Update data
+        $data = BorrowRoom::findOrFail($id);
+
+        $data->update([
+            'admin_approval_status' => $approval,
+            'processed_at' => Carbon::now(),
+        ]);
+
+        return redirect()->back()->with('success', 'Data berhasil diubah!');
+    }
 }

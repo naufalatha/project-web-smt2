@@ -26,7 +26,10 @@
 
                 <div class="form-group">
                     <label for="status">Status</label>
-                    <input type="text" class="form-control" id="status" name="status" value="{{ $data->status }}">
+                    <select class="form-control" id="status" name="status">
+                        <option value="1" {{ $data->status == 1 ? 'selected' : '' }}>Active</option>
+                        <option value="0" {{ $data->status == 0 ? 'selected' : '' }}>Inactive</option>
+                    </select>
                 </div>
 
                 <div class="form-group">

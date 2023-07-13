@@ -14,14 +14,23 @@
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td></td>
-                    <td></td>
-                    <td><a href="#" class="btn btn-warning">Edit</a>
-                        <a href="#" class="btn btn-danger"
-                            onclick="return confirm('Yakin Ingin Menghapus Data ?')">Delete</a></button>
-                    </td>
-                </tr>
+                @foreach ($roomTypes as $d)
+                    <tr>
+                        <td>{{ $d->name }}</td>
+                        @if ($d->is_active == 0)
+                            <td><span class="badge" style="background-color: red">Tidak Tersedia</span></td>
+                        @elseif ($d->is_active == 1)
+                            <td><span class="badge" style="background-color: green">Tersedia</span></td>
+                        @endif
+                        <td><a href="{{ route('admin.tipe-ruangan.edit', ['id' => $d->id]) }}"
+                                class="btn btn-warning">Edit</a>
+                            <form action="{{ route('admin.tipe-ruangan.delete', ['id' => $d->id]) }}" method="post">
+                                @csrf
+                                <button type="submit" class="btn btn-danger">Delete</button>
+                            </form>
+                        </td>
+                    </tr>
+                @endforeach
             </tbody>
         </table>
     </div>

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\BorrowRoom;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -12,7 +13,18 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('admin.hal_utama');
+        $datas = BorrowRoom::with(['user', 'room'])->get();
+
+        $countPeminjamanBaru = BorrowRoom::where('admin_approval_status', 0)->count();
+        $countPeminjamanDiterima = BorrowRoom::where('admin_approval_status', 1)->count();
+        $countPeminjamanDitolak = BorrowRoom::where('admin_approval_status', 2)->count();
+
+        return view('admin.hal_utama', [
+            'datas' => $datas,
+            'countPeminjamanBaru' => $countPeminjamanBaru,
+            'countPeminjamanDiterima' => $countPeminjamanDiterima,
+            'countPeminjamanDitolak' => $countPeminjamanDitolak,
+        ]);
     }
 
     /**
