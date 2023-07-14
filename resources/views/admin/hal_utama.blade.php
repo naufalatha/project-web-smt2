@@ -2,6 +2,7 @@
 
 @section('content')
     <div class="container">
+        <p>Halo, {{ Auth::user()->name }}!</p>
         <div class="row">
             <div class="col-md-4">
                 <div
