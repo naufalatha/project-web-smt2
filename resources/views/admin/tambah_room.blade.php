@@ -24,7 +24,10 @@
 
                 <div class="form-group">
                     <label for="status">Status</label>
-                    <input type="text" class="form-control" id="status" name="status">
+                    <select class="form-control" id="status" name="status">
+                        <option value="1">Active</option>
+                        <option value="0">Inactive</option>
+                    </select>
                 </div>
 
                 <div class="form-group">

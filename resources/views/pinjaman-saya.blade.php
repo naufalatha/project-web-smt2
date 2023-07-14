@@ -21,16 +21,14 @@
                 </button>
 
                 <!-- lOGO TEXT HERE -->
-                <a href="index.html" class="navbar-brand">STT-NF</a>
+                <a href="index.html" class="navbar-brand">STT Terpadu Nurul Fikri</a>
             </div>
 
             <!-- MENU LINKS -->
             <div class="collapse navbar-collapse">
                 <ul class="nav navbar-nav navbar-nav-first">
-                    <li><a href="#home" class="smoothScroll">Home</a></li>
-                    <li><a href="#about" class="smoothScroll">About</a></li>
-                    <li><a href="#work" class="smoothScroll">Ruangan Kami</a></li>
-                    <li><a href="{{ route('user.peminjaman.create') }}" class="smoothScroll">Pinjam Sekarang</a></li>
+                    <li><a href="{{ route('index') }}" class="smoothScroll">Home</a></li>
+                    <li><a href="#" class="smoothScroll">Peminjaman Saya</a></li>
                 </ul>
 
                 @if (!Auth::check())
@@ -38,7 +36,7 @@
                         <li><a href="#"><i class="fa fa-facebook-square"></i></a></li>
                         <li><a href="#"><i class="fa fa-twitter"></i></a></li>
                         <li><a href="#"><i class="fa fa-instagram"></i></a></li>
-                        <li class="section-btn"><a href="{{ route('login') }}">Sign in /
+                        <li class="section-btn"><a href="#" data-toggle="modal" data-target="#modal-form">Sign in /
                                 Join</a></li>
                     </ul>
                 @else
@@ -57,30 +55,14 @@
     </section>
 
 
-    <!-- HOME -->
-    <section id="home" data-stellar-background-ratio="0.5">
+    <!-- BLOG HEADER -->
+    <section id="blog-header" data-stellar-background-ratio="0.5">
         <div class="overlay"></div>
         <div class="container">
             <div class="row">
 
-                <div class="col-md-6 col-sm-12">
-                    <div class="home-info">
-                        <h1>STT Terpadu Nurul Fikri Menyediakan Ruangan Yang Ingin Dipinjam.</h1>
-                        <a href="#about" class="btn section-btn smoothScroll">Mulai</a>
-                        <span>
-                            CALL US (+62) 812-3456-7890
-                            <small>FUntuk info lebih lanjut</small>
-                        </span>
-                    </div>
-                </div>
-
-                <div class="col-md-6 col-sm-12">
-                    <div class="home-video">
-                        <div class="embed-responsive embed-responsive-16by9">
-                            <iframe src="https://www.youtube.com/embed/BZKbKCAZ7CU" frameborder="0"
-                                allowfullscreen></iframe>
-                        </div>
-                    </div>
+                <div class="col-md-offset-1 col-md-5 col-sm-12">
+                    <h2>Halo, {{ Auth::user()->name }}!</h2>
                 </div>
 
             </div>
@@ -88,137 +70,53 @@
     </section>
 
 
-    <!-- ABOUT -->
-    <section id="about" data-stellar-background-ratio="0.5">
-        <div class="container">
-            <div class="row">
-
-                <div class="col-md-5 col-sm-6">
-                    <div class="about-info">
-                        <div class="section-title">
-                            <h2>Tentang Kami</h2>
-                            <span class="line-bar">...</span>
-                        </div>
-                        <p>STT Terpadu Nurul Fikri menyediakan ruangan yang memiliki fasilitas lengkap, tersedia proyektor
-                            yang bisa digunakan maupun kursi yang ingin digunakan.</p>
-                    </div>
-                </div>
-
-                <div class="col-md-3 col-sm-6">
-                    <div class="about-info skill-thumb">
-
-                        <strong>Ruangan Kampus A</strong>
-                        {{-- <span class="pull-right">95%</span> --}}
-                        <div class="progress">
-                            <div class="progress-bar progress-bar-primary" role="progressbar" aria-valuenow="95"
-                                aria-valuemin="0" aria-valuemax="100" style="width: 95%;"></div>
-                        </div>
-
-                        <strong>Ruangan Kampus B</strong>
-                        {{-- <span class="pull-right">95%</span> --}}
-                        <div class="progress">
-                            <div class="progress-bar progress-bar-primary" role="progressbar" aria-valuenow="95"
-                                aria-valuemin="0" aria-valuemax="100" style="width: 95%;"></div>
-                        </div>
-
-                        <strong>Auditorium STT-NF</strong>
-                        {{-- <span class="pull-right">95%</span> --}}
-                        <div class="progress">
-                            <div class="progress-bar progress-bar-primary" role="progressbar" aria-valuenow="95"
-                                aria-valuemin="0" aria-valuemax="100" style="width: 95%;"></div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-md-4 col-sm-12">
-                    <div class="about-image">
-                        <img src="{{ asset('landing/images/Perpus-depan-jpg.webp') }}" class="img-responsive"
-                            alt="">
-                    </div>
-                </div>
-
-            </div>
-        </div>
-    </section>
-
-    <!-- WORK -->
-    <section id="work" data-stellar-background-ratio="0.5">
+    <!-- TABLE PEMINJAMAN SAYA SECTION -->
+    <section id="peminjaman-saya">
         <div class="container">
             <div class="row">
 
                 <div class="col-md-12 col-sm-12">
-                    <div class="section-title">
-                        <h2>Daftar Ruangan STT NF</h2>
-                        <span class="line-bar">...</span>
+                    <h2 style="margin-bottom: 24px">Peminjaman Saya</h2>
+                    <div class="table-responsive">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Nama Ruangan</th>
+                                    <th>Tanggal Peminjaman</th>
+                                    <th>Tanggal Selesai</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach ($user_borrow as $p)
+                                    <tr>
+                                        <td>{{ $p->room->name }}</td>
+                                        <td>{{ $p->borrow_at }}</td>
+                                        <td>{{ $p->until_at }}</td>
+                                        @if ($p->admin_approval_status == 0)
+                                            <td><span class="badge" style="background-color: red">Belum Disetujui</span>
+                                            </td>
+                                        @elseif ($p->admin_approval_status == 1)
+                                            <td><span class="badge" style="background-color: green">Disetujui</span>
+                                            </td>
+                                        @endif
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
                     </div>
+                    <a href="{{ route('user.peminjaman.create') }}" class="btn btn-success">Tambah Peminjaman</a>
                 </div>
-
-                @foreach ($rooms as $r)
-                    <div class="col-md-3 col-sm-6">
-                        <!-- WORK THUMB -->
-                        <div class="work-thumb">
-                            <a href="{{ asset('landing/images/Audit-1-jpg.webp') }}" class="image-popup">
-                                <img src="{{ asset('landing/images/Audit-1-jpg.webp') }}" class="img-responsive"
-                                    alt="Work">
-
-                                <div class="work-info">
-                                    <h3>{{ $r->name }}</h3>
-                                    <small>{{ $r->roomType->name }}</small>
-                                </div>
-                            </a>
-                        </div>
-                    </div>
-                @endforeach
 
             </div>
         </div>
     </section>
-
-
 
 
     <!-- FOOTER -->
     <footer data-stellar-background-ratio="0.5">
         <div class="container">
             <div class="row">
-
-                <div class="col-md-5 col-sm-12">
-                    <div class="footer-thumb footer-info">
-                        <h2>Hydro Company</h2>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut
-                            labore et dolore magna aliqua.</p>
-                    </div>
-                </div>
-
-                <div class="col-md-2 col-sm-4">
-                    <div class="footer-thumb">
-                        <h2>Company</h2>
-                        <ul class="footer-link">
-                            <li><a href="#">About Us</a></li>
-                            <li><a href="#">Join our team</a></li>
-                            <li><a href="#">Read Blog</a></li>
-                            <li><a href="#">Press</a></li>
-                        </ul>
-                    </div>
-                </div>
-
-                <div class="col-md-2 col-sm-4">
-                    <div class="footer-thumb">
-                        <h2>Services</h2>
-                        <ul class="footer-link">
-                            <li><a href="#">Pricing</a></li>
-                            <li><a href="#">Documentation</a></li>
-                            <li><a href="#">Support</a></li>
-                        </ul>
-                    </div>
-                </div>
-
-                <div class="col-md-3 col-sm-4">
-                    <div class="footer-thumb">
-                        <h2>Find us</h2>
-                        <p>123 Grand Rama IX, <br> Krung Thep Maha Nakhon 10400</p>
-                    </div>
-                </div>
 
                 <div class="col-md-12 col-sm-12">
                     <div class="footer-bottom">
@@ -232,8 +130,7 @@
                                 <p>Call us <span>(+66) 010-020-0340</span></p>
                             </div>
                             <ul class="social-icon">
-                                <li><a href="https://www.facebook.com/templatemo" class="fa fa-facebook-square"
-                                        attr="facebook icon"></a></li>
+                                <li><a href="#" class="fa fa-facebook-square" attr="facebook icon"></a></li>
                                 <li><a href="#" class="fa fa-twitter"></a></li>
                                 <li><a href="#" class="fa fa-instagram"></a></li>
                             </ul>
@@ -244,7 +141,6 @@
             </div>
         </div>
     </footer>
-
 
     <!-- MODAL -->
     <section class="modal fade" id="modal-form" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"

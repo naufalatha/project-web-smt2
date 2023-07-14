@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\BorrowRoom;
+use App\Models\Room;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
-class BorrowRoomController extends Controller
+class UserBorrowRoomController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -20,7 +22,11 @@ class BorrowRoomController extends Controller
      */
     public function create()
     {
-        return view('borrow-room.create');
+        $rooms = Room::with('roomType')->get();
+
+        return view('details', [
+            'rooms' => $rooms,
+        ]);
     }
 
     /**
@@ -44,15 +50,19 @@ class BorrowRoomController extends Controller
             'notes' => $validation['notes'],
         ]);
 
-        return redirect()->route('borrow-room.show', $borrowRoom->id);
+        return redirect()->route('user.peminjaman.show')->with('success', 'Berhasil mengajukan peminjaman ruangan');
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show()
     {
-        //
+        $user_borrow = BorrowRoom::with('room')->where('user_id', Auth::user()->id)->get();
+
+        return view('pinjaman-saya', [
+            'user_borrow' => $user_borrow,
+        ]);
     }
 
     /**

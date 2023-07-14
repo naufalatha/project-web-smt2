@@ -4,6 +4,9 @@ use App\Http\Controllers\Admin\BorrowRoomController;
 use App\Http\Controllers\Admin\HomeController;
 use App\Http\Controllers\Admin\RoomController;
 use App\Http\Controllers\Admin\RoomTypeController;
+use App\Http\Controllers\UserBorrowRoomController;
+use App\Http\Controllers\UserHomeController;
+use App\Http\Controllers\UserRoomController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -17,8 +20,21 @@ use Illuminate\Support\Facades\Route;
 |
  */
 
-Route::get('/', function () {
-    return view('welcome');
+Route::get('/', [UserHomeController::class, 'index'])->name('index');
+
+//route with middleware
+Route::group([
+    'prefix' => 'user',
+    'as' => 'user.',
+    'middleware' => ['auth', 'roles:user'],
+], function () {
+    Route::get('/peminjaman', [UserBorrowRoomController::class, 'index'])->name('peminjaman');
+    Route::get('/peminjaman/create', [UserBorrowRoomController::class, 'create'])->name('peminjaman.create');
+    Route::post('/peminjaman', [UserBorrowRoomController::class, 'store'])->name('peminjaman.store');
+    Route::get('/peminjaman-saya', [UserBorrowRoomController::class, 'show'])->name('peminjaman.show');
+
+    Route::get('/ruangan', [UserRoomController::class, 'index'])->name('ruangan');
+    Route::get('/ruangan/{id}', [UserRoomController::class, 'show'])->name('ruangan.show');
 });
 
 Auth::routes();

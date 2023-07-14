@@ -25,6 +25,6 @@ class Roles
             }
         }
 
-        return redirect()->route('login');
+        return redirect()->route('index');
     }
 }
