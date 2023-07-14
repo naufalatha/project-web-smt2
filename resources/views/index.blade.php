@@ -30,7 +30,8 @@
                     <li><a href="#home" class="smoothScroll">Home</a></li>
                     <li><a href="#about" class="smoothScroll">About</a></li>
                     <li><a href="#work" class="smoothScroll">Ruangan Kami</a></li>
-                    <li><a href="{{ route('user.peminjaman.create') }}" class="smoothScroll">Pinjam Sekarang</a></li>
+                    <li><a href="{{ route('user.peminjaman.create') }}" class="smoothScroll">Pinjam Ruangan</a></li>
+                    <li><a href="{{ route('user.peminjaman.show') }}" class="smoothScroll">Peminjaman Saya</a></li>
                 </ul>
 
                 @if (!Auth::check())
